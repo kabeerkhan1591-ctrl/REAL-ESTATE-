@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sterling & Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0a; --ink-light: #1a1a1a; --charcoal: #2a2a2a;
+  --gray-600: #666; --gray-400: #999; --gray-200: #e5e5e5; --gray-100: #f5f5f5;
+  --paper: #fff; --paper-warm: #fafafa;
+  --font-display: 'Anton',sans-serif; --font-body: 'Inter',sans-serif; --font-mono: 'IBM Plex Mono',monospace;
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08); --shadow-md: 0 4px 20px rgba(0,0,0,0.10); --shadow-lg: 0 12px 40px rgba(0,0,0,0.15);
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+ul{list-style:none}
+input,select,textarea{font-family:inherit;font-size:1rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.fade-up{opacity:0;animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards}
+.fade-up-1{animation-delay:0.1s}.fade-up-2{animation-delay:0.25s}.fade-up-3{animation-delay:0.4s}
+.fade-up-4{animation-delay:0.55s}.fade-up-5{animation-delay:0.7s}
+@media(prefers-reduced-motion:reduce){.fade-up{animation:none;opacity:1}}
+
+.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.08);transition:var(--transition)}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--font-display);font-size:1.25rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--paper);display:flex;align-items:center;gap:10px}
+.brand-icon{width:28px;height:28px;border:2px solid var(--paper);display:flex;align-items:center;justify-content:center}
+.brand-icon svg{width:14px;height:14px;fill:var(--paper)}
+.desktop-nav{display:none;align-items:center;gap:36px}
+.desktop-nav a{font-size:0.8rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.65);transition:var(--transition);position:relative}
+.desktop-nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--paper);transition:var(--transition)}
+.desktop-nav a:hover{color:var(--paper)}.desktop-nav a:hover::after{width:100%}
+.header-actions{display:flex;align-items:center;gap:12px}
+.btn-ghost{display:none;align-items:center;gap:6px;padding:8px 18px;border:1px solid rgba(255,255,255,0.25);color:var(--paper);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;transition:var(--transition)}
+.btn-ghost:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.fav-btn{position:relative;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:var(--paper);transition:var(--transition)}
+.fav-btn:hover{color:var(--gray-200)}.fav-btn svg{width:20px;height:20px}
+.fav-badge{position:absolute;top:4px;right:2px;width:16px;height:16px;background:var(--paper);color:var(--ink);font-family:var(--font-mono);font-size:0.6rem;font-weight:600;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.hamburger{width:40px;height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--paper)}
+.hamburger span{display:block;width:20px;height:1.5px;background:currentColor;transition:var(--transition)}
+.hamburger.active span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-nav-overlay{position:fixed;inset:72px 0 0 0;background:var(--ink);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;opacity:0;pointer-events:none;transition:opacity 0.3s ease}
+.mobile-nav-overlay.active{opacity:1;pointer-events:all}
+.mobile-nav-overlay a{font-family:var(--font-display);font-size:2rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--paper);transition:var(--transition)}
+.mobile-nav-overlay a:hover{color:var(--gray-400)}
+@media(min-width:860px){.desktop-nav{display:flex}.btn-ghost{display:inline-flex}.hamburger{display:none}}
+
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;overflow:hidden;background:var(--ink)}
+.hero-video{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;opacity:0.35}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,0.5) 0%,rgba(10,10,10,0.85) 70%,var(--ink) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;max-width:900px;width:100%}
+.hero-eyebrow{font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-400);margin-bottom:20px}
+.hero-headline{font-family:var(--font-display);font-size:clamp(3rem,10vw,7rem);line-height:0.95;letter-spacing:0.02em;text-transform:uppercase;color:var(--paper);margin-bottom:24px}
+.hero-headline span{display:block}
+.hero-tagline{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:32px}
+.hero-tagline svg{width:20px;height:20px;stroke:var(--gray-400);fill:none;stroke-width:1.5}
+.hero-tagline p{font-size:1rem;color:var(--gray-400);max-width:420px}
+.hero-cta-row{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:48px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--paper);color:var(--ink);font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;transition:var(--transition);border:none}
+.btn-primary:hover{background:var(--gray-200);transform:translateY(-2px)}
+.btn-outline-light{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border:1px solid rgba(255,255,255,0.3);color:var(--paper);font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:var(--transition);background:transparent}
+.btn-outline-light:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.hero-badge{display:none;align-items:center;gap:10px;padding:10px 16px;border:1px solid rgba(255,255,255,0.15)}
+.hero-badge svg{width:18px;height:18px;stroke:var(--paper);fill:none;stroke-width:1.5}
+.hero-badge span{font-size:0.7rem;color:var(--gray-400);letter-spacing:0.05em;text-transform:uppercase;text-align:left;line-height:1.3}
+.hero-stats{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat-number{font-family:var(--font-display);font-size:2.5rem;line-height:1;color:var(--paper)}
+.hero-stat-label{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray-400);margin-top:6px}
+@media(min-width:640px){.hero-badge{display:inline-flex}}
+.float-tag{position:absolute;z-index:2;background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.12);padding:8px 14px;font-family:var(--font-mono);font-size:0.75rem;color:var(--paper);border-radius:var(--radius-sm);animation:float 4s ease-in-out infinite;pointer-events:none}
+
+.search-card{position:relative;z-index:3;max-width:1100px;margin:-40px auto 0;background:var(--paper);border:1px solid var(--gray-200);box-shadow:var(--shadow-lg);padding:0}
+.search-tabs{display:flex;border-bottom:1px solid var(--gray-200)}
+.search-tab{flex:1;padding:16px;text-align:center;font-size:0.75rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray-600);cursor:pointer;transition:var(--transition);border-bottom:2px solid transparent;margin-bottom:-1px}
+.search-tab.active{color:var(--ink);border-bottom-color:var(--ink)}
+.search-tab:hover:not(.active){color:var(--charcoal)}
+.search-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;padding:24px}
+.search-field{padding:12px 16px;border-right:1px solid var(--gray-200)}
+.search-field:last-child{border-right:none}
+.search-field label{display:block;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray-600);margin-bottom:6px}
+.search-field input,.search-field select{width:100%;border:none;background:transparent;font-size:0.9rem;color:var(--ink);outline:none}
+.search-field input::placeholder{color:var(--gray-400)}
+.search-action{padding:0 24px 24px;display:flex;justify-content:flex-end}
+.search-action .btn-primary{padding:12px 28px;font-size:0.75rem}
+
+.section{padding:80px 24px;max-width:1400px;margin:0 auto}
+.section-header{margin-bottom:48px}
+.section-eyebrow{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-600);margin-bottom:12px}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;letter-spacing:0.02em;text-transform:uppercase;color:var(--ink)}
+.bg-ink{background:var(--ink);color:var(--paper)}.bg-ink .section-title{color:var(--paper)}.bg-ink .section-eyebrow{color:var(--gray-400)}
+
+.filter-bar{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px;align-items:center}
+.filter-bar input[type="text"]{flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--gray-200);font-size:0.9rem;outline:none;transition:var(--transition)}
+.filter-bar input[type="text"]:focus{border-color:var(--ink)}
+.filter-bar select{padding:10px 14px;border:1px solid var(--gray-200);font-size:0.85rem;background:var(--paper);outline:none;cursor:pointer}
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.card{background:var(--paper);border:1px solid var(--gray-200);overflow:hidden;transition:var(--transition);cursor:pointer}
+.card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.card-img{position:relative;height:220px;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
+.card:hover .card-img img{transform:scale(1.05)}
+.card-tag{position:absolute;top:12px;left:12px;padding:4px 10px;font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--paper)}
+.card-tag.rent{background:var(--gray-600)}
+.card-fav{position:absolute;top:12px;right:12px;width:36px;height:36px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition);border:none}
+.card-fav:hover{background:var(--paper)}
+.card-fav svg{width:16px;height:16px;fill:none;stroke:var(--ink);stroke-width:2;transition:var(--transition)}
+.card-fav.active svg{fill:var(--ink);stroke:var(--ink)}
+.card-body{padding:20px}
+.card-price{font-family:var(--font-mono);font-size:1.1rem;font-weight:500;color:var(--ink);margin-bottom:6px}
+.card-title{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.3}
+.card-meta{display:flex;gap:16px;font-size:0.8rem;color:var(--gray-600)}
+.card-meta span{display:flex;align-items:center;gap:4px}
+.card-meta svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.7);backdrop-filter:blur(4px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s ease}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal{background:var(--paper);max-width:900px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:var(--shadow-lg)}
+.modal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;background:var(--paper);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:var(--shadow-sm);border:none}
+.modal-close svg{width:18px;height:18px;stroke:var(--ink);stroke-width:2}
+.modal-img{width:100%;height:300px;object-fit:cover}
+.modal-body{padding:32px}
+.modal-price{font-family:var(--font-mono);font-size:1.5rem;font-weight:500;margin-bottom:8px}
+.modal-title{font-size:1.5rem;font-weight:700;margin-bottom:16px}
+.modal-specs{display:flex;gap:24px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--gray-200)}
+.modal-spec{text-align:center}
+.modal-spec-value{font-family:var(--font-mono);font-size:1.1rem;font-weight:500}
+.modal-spec-label{font-size:0.7rem;color:var(--gray-600);text-transform:uppercase;letter-spacing:0.1em}
+.modal-desc{color:var(--charcoal);margin-bottom:24px;line-height:1.7}
+.mortgage-calc{background:var(--gray-100);padding:24px;margin-bottom:24px}
+.mortgage-calc h4{font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;font-weight:600}
+.mortgage-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+.mortgage-field label{display:block;font-size:0.7rem;color:var(--gray-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em}
+.mortgage-field input{width:100%;padding:8px 12px;border:1px solid var(--gray-200);font-family:var(--font-mono);font-size:0.9rem}
+.mortgage-result{font-family:var(--font-mono);font-size:1.2rem;font-weight:500;padding-top:12px;border-top:1px solid var(--gray-200)}
+.agent-card{display:flex;align-items:center;gap:16px;padding:16px;border:1px solid var(--gray-200);margin-bottom:16px}
+.agent-card img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.agent-card-info h4{font-size:1rem;font-weight:600}
+.agent-card-info p{font-size:0.8rem;color:var(--gray-600)}
+
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.agent-item{text-align:center;padding:32px 24px;border:1px solid rgba(255,255,255,0.08);transition:var(--transition)}
+.agent-item:hover{border-color:rgba(255,255,255,0.2)}
+.agent-item img{width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto 16px;border:2px solid rgba(255,255,255,0.15)}
+.agent-item h3{font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.agent-item .role{font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:12px}
+.agent-item .contact{font-size:0.85rem;color:var(--gray-400)}
+
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px}
+.process-step{padding:32px;border:1px solid rgba(255,255,255,0.1);position:relative}
+.process-step-number{font-family:var(--font-display);font-size:3rem;line-height:1;color:rgba(255,255,255,0.08);position:absolute;top:16px;right:20px}
+.process-step h3{font-size:1.1rem;font-weight:600;margin-bottom:8px;position:relative}
+.process-step p{font-size:0.9rem;color:var(--gray-400);line-height:1.6;position:relative}
+
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr}}
+.contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:12px 16px;border:1px solid var(--gray-200);margin-bottom:16px;font-size:0.9rem;outline:none;transition:var(--transition)}
+.contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{border-color:var(--ink)}
+.contact-form textarea{min-height:120px;resize:vertical}
+.contact-form button{width:100%;padding:14px;background:var(--ink);color:var(--paper);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;font-size:0.8rem;transition:var(--transition);border:none}
+.contact-form button:hover{background:var(--charcoal)}
+.contact-info-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.contact-info-item svg{width:20px;height:20px;stroke:var(--paper);fill:none;stroke-width:1.5;flex-shrink:0;margin-top:2px}
+.contact-info-item h4{font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;font-weight:600}
+.contact-info-item p{font-size:0.9rem;color:var(--gray-400)}
+
+.dashboard{display:none}.dashboard.active{display:block}
+.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px}
+.dash-stat{background:var(--paper);border:1px solid var(--gray-200);padding:24px}
+.dash-stat-value{font-family:var(--font-mono);font-size:1.8rem;font-weight:500;margin-bottom:4px}
+.dash-stat-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-600)}
+.dash-table{width:100%;border-collapse:collapse;font-size:0.9rem}
+.dash-table th,.dash-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--gray-200)}
+.dash-table th{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-600);font-weight:600}
+.dash-table td{color:var(--charcoal)}
+.dash-table img{width:48px;height:36px;object-fit:cover;border-radius:var(--radius-sm)}
+.status-pill{display:inline-block;padding:2px 10px;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;border-radius:100px}
+.status-pill.active{background:var(--gray-100);color:var(--ink);border:1px solid var(--gray-200)}
+.status-pill.pending{background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200)}
+.dash-actions{display:flex;gap:8px}
+.dash-actions button{padding:6px 12px;font-size:0.75rem;border:1px solid var(--gray-200);transition:var(--transition);background:transparent}
+.dash-actions button:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.dash-actions .delete:hover{background:#c00;border-color:#c00;color:var(--paper)}
+.add-listing-form{background:var(--paper);border:1px solid var(--gray-200);padding:24px;margin-bottom:32px;display:none}
+.add-listing-form.active{display:block}
+.add-listing-form h3{font-size:1.1rem;margin-bottom:16px;font-weight:600}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:10px 14px;border:1px solid var(--gray-200);font-size:0.9rem;outline:none}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--ink)}
+.demo-note{background:var(--gray-100);border-left:3px solid var(--ink);padding:12px 16px;font-size:0.8rem;color:var(--gray-600);margin-bottom:24px}
+
+.login-modal .modal{max-width:420px;padding:40px;text-align:center}
+.login-modal h2{font-family:var(--font-display);font-size:2rem;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+.login-modal p{color:var(--gray-600);font-size:0.9rem;margin-bottom:24px}
+.login-modal input{width:100%;padding:12px 16px;border:1px solid var(--gray-200);margin-bottom:12px;font-size:0.9rem;outline:none}
+.login-modal input:focus{border-color:var(--ink)}
+.login-modal button[type="submit"]{width:100%;padding:14px;background:var(--ink);color:var(--paper);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;font-size:0.8rem;margin-top:8px;transition:var(--transition);border:none}
+.login-modal button[type="submit"]:hover{background:var(--charcoal)}
+
+.fav-panel{position:fixed;top:0;right:0;width:100%;max-width:420px;height:100vh;background:var(--paper);z-index:3000;box-shadow:var(--shadow-lg);transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);display:flex;flex-direction:column}
+.fav-panel.active{transform:translateX(0)}
+.fav-panel-header{padding:24px;border-bottom:1px solid var(--gray-200);display:flex;justify-content:space-between;align-items:center}
+.fav-panel-header h2{font-family:var(--font-display);font-size:1.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.fav-panel-close{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:none;background:transparent}
+.fav-panel-close svg{width:18px;height:18px;stroke:var(--ink);stroke-width:2}
+.fav-panel-body{flex:1;overflow-y:auto;padding:16px}
+.fav-item{display:flex;gap:12px;padding:12px;border:1px solid var(--gray-200);margin-bottom:12px;cursor:pointer;transition:var(--transition)}
+.fav-item:hover{border-color:var(--ink)}
+.fav-item img{width:72px;height:54px;object-fit:cover;flex-shrink:0}
+.fav-item-info h4{font-size:0.9rem;font-weight:600;margin-bottom:2px}
+.fav-item-info p{font-family:var(--font-mono);font-size:0.8rem;color:var(--gray-600)}
+.fav-empty{text-align:center;padding:48px 24px;color:var(--gray-600)}
+
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:4000;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--ink);color:var(--paper);padding:14px 20px;font-size:0.85rem;box-shadow:var(--shadow-lg);border-left:3px solid var(--paper);transform:translateX(120%);transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);max-width:320px}
+.toast.show{transform:translateX(0)}
+
+.site-footer{background:var(--ink);color:var(--paper);padding:64px 24px 32px}
+.footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;margin-bottom:48px}
+.footer-col h4{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;font-weight:600;color:var(--gray-400)}
+.footer-col a{display:block;font-size:0.9rem;color:rgba(255,255,255,0.6);margin-bottom:10px;transition:var(--transition)}
+.footer-col a:hover{color:var(--paper)}
+.footer-col p{font-size:0.9rem;color:rgba(255,255,255,0.6);margin-bottom:8px}
+.footer-newsletter{display:flex;gap:0;margin-top:12px}
+.footer-newsletter input{flex:1;padding:10px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--paper);font-size:0.85rem;outline:none}
+.footer-newsletter input::placeholder{color:var(--gray-600)}
+.footer-newsletter button{padding:10px 18px;background:var(--paper);color:var(--ink);font-weight:600;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;transition:var(--transition);border:none}
+.footer-newsletter button:hover{background:var(--gray-200)}
+.footer-bottom{max-width:1400px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:0.8rem;color:var(--gray-600)}
+.footer-social{display:flex;gap:16px}
+.footer-social a{color:rgba(255,255,255,0.5);transition:var(--transition)}
+.footer-social a:hover{color:var(--paper)}
+.footer-social svg{width:18px;height:18px;fill:currentColor}
+
+.hidden{display:none !important}.text-center{text-align:center}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.bg-ink :focus-visible{outline:2px solid var(--paper);outline-offset:2px}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gray-400)}
+</style>
+<base target="_blank">
+</head>
+<body>
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="#" class="brand" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18v-8H3v8zm0-10h18V3H3v8z"/></svg></div>
+      Sterling & Co.
+    </a>
+    <nav class="desktop-nav">
+      <a href="#listings" onclick="scrollToSection('listings');return false">Listings</a>
+      <a href="#agents" onclick="scrollToSection('agents');return false">Agents</a>
+      <a href="#process" onclick="scrollToSection('process');return false">Process</a>
+      <a href="#contact" onclick="scrollToSection('contact');return false">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="fav-btn" onclick="toggleFavPanel()" aria-label="Favorites">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="fav-badge" id="favBadge">0</span>
+      </button>
+      <button class="btn-ghost" onclick="openLogin()">Agent Login</button>
+      <button class="btn-ghost" onclick="scrollToSection('contact')">Get in Touch</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav-overlay" id="mobileNav">
+  <a href="#listings" onclick="scrollToSection('listings');toggleMobileNav();return false">Listings</a>
+  <a href="#agents" onclick="scrollToSection('agents');toggleMobileNav();return false">Agents</a>
+  <a href="#process" onclick="scrollToSection('process');toggleMobileNav();return false">Process</a>
+  <a href="#contact" onclick="scrollToSection('contact');toggleMobileNav();return false">Contact</a>
+  <a href="#" onclick="openLogin();toggleMobileNav();return false">Agent Login</a>
+</div>
+
+<section class="hero" id="hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="hero-video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="float-tag" style="top:25%;left:15%;animation-delay:0s">$1,250,000</div>
+  <div class="float-tag" style="top:40%;right:12%;animation-delay:1.5s">$890,000</div>
+  <div class="float-tag" style="top:60%;left:8%;animation-delay:3s">$2,100,000</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow fade-up fade-up-1">Sterling & Co.
+
+    </p>
+    <h1 class="hero-headline fade-up fade-up-2"><span>Find.</span><span>Tour.</span><span>Belong.</span></h1>
+    <div class="hero-tagline fade-up fade-up-3">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <p>Curated properties across the city&#39;s most sought-after neighborhoods. Your next chapter starts here.</p>
+    </div>
+    <div class="hero-cta-row fade-up fade-up-4">
+      <button class="btn-primary" onclick="scrollToSection('listings')">Browse Listings
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span>Top Rated<br>Agency 2026</span>
+      </div>
+    </div>
+    <div class="hero-stats fade-up fade-up-5">
+      <div class="hero-stat"><div class="hero-stat-number">247</div><div class="hero-stat-label">Active Listings</div></div>
+      <div class="hero-stat"><div class="hero-stat-number">18</div><div class="hero-stat-label">Years Experience</div></div>
+      <div class="hero-stat"><div class="hero-stat-number">98%</div><div class="hero-stat-label">Client Satisfaction</div></div>
+      <div class="hero-stat"><div class="hero-stat-number">42</div><div class="hero-stat-label">Expert Agents</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="search-card" id="searchCard">
+  <div class="search-tabs">
+    <div class="search-tab active" onclick="setSearchTab('buy',this)">Buy</div>
+    <div class="search-tab" onclick="setSearchTab('rent',this)">Rent</div>
+  </div>
+  <div class="search-fields">
+    <div class="search-field">
+      <label>Location</label>
+      <input type="text" id="searchLocation" placeholder="City, neighborhood...">
+    </div>
+    <div class="search-field">
+      <label>Property Type</label>
+      <select id="searchType">
+        <option value="">Any Type</option><option value="house">House</option><option value="apartment">Apartment</option><option value="villa">Villa</option><option value="penthouse">Penthouse</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Price Range</label>
+      <select id="searchPrice">
+        <option value="">Any Price</option><option value="0-500000">Under $500K</option><option value="500000-1000000">$500K to $1M</option><option value="1000000-2000000">$1M to $2M</option><option value="2000000+">$2M+</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Bedrooms</label>
+      <select id="searchBeds">
+        <option value="">Any</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option><option value="5">5+</option>
+      </select>
+    </div>
+  </div>
+  <div class="search-action">
+    <button class="btn-primary" onclick="applySearch()">Search Properties</button>
+  </div>
+</div>
+
+<section class="section" id="listings">
+  <div class="section-header">
+    <p class="section-eyebrow">Featured Properties</p>
+    <h2 class="section-title">Current Listings</h2>
+  </div>
+  <div class="filter-bar">
+    <input type="text" id="filterKeyword" placeholder="Search by keyword..." oninput="renderListings()">
+    <select id="filterSort" onchange="renderListings()">
+      <option value="newest">Newest First</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option>
+    </select>
+  </div>
+  <div class="listings-grid" id="listingsGrid"></div>
+</section>
+
+<section class="section bg-ink" id="process">
+  <div class="section-header">
+    <p class="section-eyebrow">How It Works</p>
+    <h2 class="section-title">The Sterling & Co. Process</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step"><span class="process-step-number">01</span><h3>Search</h3><p>Browse our curated collection of premium properties filtered to your exact specifications and lifestyle needs.</p></div>
+    <div class="process-step"><span class="process-step-number">02</span><h3>Tour</h3><p>Schedule private viewings with our expert agents who know every detail of the homes and neighborhoods.</p></div>
+    <div class="process-step"><span class="process-step-number">03</span><h3>Negotiate</h3><p>Our seasoned negotiators work tirelessly to secure the best terms, protecting your interests at every step.</p></div>
+    <div class="process-step"><span class="process-step-number">04</span><h3>Close</h3><p>We handle the paperwork, inspections, and coordination so your closing day is smooth and stress-free.</p></div>
+  </div>
+</section>
+
+<section class="section bg-ink" id="agents">
+  <div class="section-header">
+    <p class="section-eyebrow">Our Team</p>
+    <h2 class="section-title">Meet the Agents</h2>
+  </div>
+  <div class="agents-grid" id="agentsGrid"></div>
+</section>
+
+<section class="section" id="contact">
+  <div class="section-header">
+    <p class="section-eyebrow">Get in Touch</p>
+    <h2 class="section-title">Start a Conversation</h2>
+  </div>
+  <div class="contact-grid">
+    <form class="contact-form" onsubmit="handleContact(event)">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="tel" placeholder="Phone Number">
+      <select><option>I am interested in...</option><option>Buying a home</option><option>Selling a home</option><option>Renting</option><option>Property valuation</option><option>General inquiry</option></select>
+      <textarea placeholder="Tell us more about what you are looking for..."></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <div>
+      <div class="contact-info-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><h4>Visit Our Office</h4><p>1234 Skyline Boulevard<br>Downtown District, CA 90210</p></div>
+      </div>
+      <div class="contact-info-item">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div><h4>Call Us</h4><p>+1 (555) 234-5678<br>Mon to Sat, 9am to 7pm</p></div>
+      </div>
+      <div class="contact-info-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div><h4>Email</h4><p>hello@abdulbari.estate<br>listings@abdulbari.estate</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section dashboard" id="dashboard">
+  <div class="dash-header">
+    <div><p class="section-eyebrow">Agent Portal</p><h2 class="section-title" id="dashTitle">Dashboard</h2></div>
+    <div style="display:flex;gap:12px">
+      <button class="btn-primary" style="font-size:0.75rem;padding:10px 20px" onclick="toggleAddForm()">+ Add Listing</button>
+      <button class="btn-ghost" style="border-color:var(--gray-200);color:var(--ink)" onclick="logout()">Logout</button>
+    </div>
+  </div>
+  <div class="demo-note"><strong>Demo mode:</strong> Changes are saved to your browser localStorage and will persist across sessions on this device.</div>
+  <div class="dash-stats" id="dashStats"></div>
+  <div class="add-listing-form" id="addForm">
+    <h3>Add New Listing</h3>
+    <div class="form-row">
+      <input type="text" id="newTitle" placeholder="Property Title" required>
+      <input type="text" id="newLocation" placeholder="Location" required>
+    </div>
+    <div class="form-row">
+      <select id="newType"><option value="house">House</option><option value="apartment">Apartment</option><option value="villa">Villa</option><option value="penthouse">Penthouse</option></select>
+      <select id="newStatus"><option value="sale">For Sale</option><option value="rent">For Rent</option></select>
+    </div>
+    <div class="form-row">
+      <input type="number" id="newPrice" placeholder="Price (USD)" required>
+      <input type="number" id="newBeds" placeholder="Bedrooms" required>
+      <input type="number" id="newBaths" placeholder="Bathrooms" required>
+      <input type="number" id="newSqft" placeholder="Sq Ft" required>
+    </div>
+    <div class="form-row"><textarea id="newDesc" placeholder="Description" rows="3" style="grid-column:1/-1"></textarea></div>
+    <div class="form-row"><input type="url" id="newImage" placeholder="Image URL (or leave blank for default)" style="grid-column:1/-1"></div>
+    <button class="btn-primary" onclick="addListing()">Save Listing</button>
+  </div>
+  <table class="dash-table">
+    <thead><tr><th>Photo</th><th>Title</th><th>Price</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody id="dashTableBody"></tbody>
+  </table>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Sterling & Co.</h4>
+      <p>Premium real estate services with a personal touch. Finding your place in the world since 2008.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#listings" onclick="scrollToSection('listings');return false">Buy</a>
+      <a href="#listings" onclick="scrollToSection('listings');return false">Rent</a>
+      <a href="#agents" onclick="scrollToSection('agents');return false">Agents</a>
+      <a href="#contact" onclick="scrollToSection('contact');return false">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Privacy Policy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p>Get new listings delivered to your inbox.</p>
+      <div class="footer-newsletter">
+        <input type="email" placeholder="Your email" id="newsletterEmail">
+        <button onclick="subscribeNewsletter()">Join</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>2026 Sterling & Co. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 林20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 
+7.72 0 0 
+0 
+23 
+3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 
+0 
+24 
+24"><path d="M16 
+8a6 
+6 
+0 
+0 
+1 
+6 
+6v7h-4v-7a2 
+2 
+0 
+0 
+0-2-2 
+2 
+2 
+0 
+0 
+0-2 
+2v7h-4v-7a6 
+6 
+0 
+0 
+1 
+6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="propertyModal" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModalDirect()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay login-modal" id="loginModal" onclick="closeLogin(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeLoginDirect()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <h2>Agent Login</h2>
+    <p>Enter your credentials to access the dashboard.</p>
+    <form onsubmit="handleLogin(event)">
+      <input type="email" id="loginEmail" placeholder="agent@abdulbari.com" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      <button type="submit">Sign In</button>
+    </form>
+    <p style="margin-top:16px;font-size:0.8rem;color:var(--gray-600)">Demo: any agent email + password <strong>demo123</strong></p>
+  </div>
+</div>
+
+<div class="fav-panel" id="favPanel">
+  <div class="fav-panel-header">
+    <h2>Saved</h2>
+    <button class="fav-panel-close" onclick="toggleFavPanel()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="fav-panel-body" id="favPanelBody"></div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+var defaultListings = [
+  {id:1,title:"Modern Glass Villa",location:"Beverly Hills, CA",price:3200000,beds:5,baths:4,sqft:4200,type:"villa",status:"sale",image:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",desc:"Stunning contemporary villa with floor-to-ceiling glass walls, infinity pool, and panoramic canyon views. Smart home integration throughout.",agentId:1},
+  {id:2,title:"Downtown Penthouse",location:"Manhattan, NY",price:4500000,beds:3,baths:3,sqft:2800,type:"penthouse",status:"sale",image:"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",desc:"Sky-high luxury penthouse with 360-degree city views, private terrace, and bespoke Italian finishes. Full concierge service.",agentId:2},
+  {id:3,title:"Seaside Cottage",location:"Malibu, CA",price:1800000,beds:3,baths:2,sqft:1900,type:"house",status:"sale",image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",desc:"Charming beachfront cottage steps from the sand. Renovated kitchen, hardwood floors, and a lush private garden.",agentId:3},
+  {id:4,title:"Urban Loft",location:"Brooklyn, NY",price:4500,beds:2,baths:2,sqft:1200,type:"apartment",status:"rent",image:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",desc:"Industrial-chic loft in a converted warehouse. Exposed brick, soaring ceilings, and artisan light fixtures.",agentId:1},
+  {id:5,title:"Hillside Estate",location:"Bel Air, CA",price:8500000,beds:6,baths:7,sqft:8500,type:"villa",status:"sale",image:"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",desc:"Majestic hillside estate with gated entry, wine cellar, home theater, and resort-style grounds with tennis court.",agentId:2},
+  {id:6,title:"Designer Apartment",location:"Miami, FL",price:3200,beds:1,baths:1,sqft:850,type:"apartment",status:"rent",image:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",desc:"Boutique designer apartment in the Design District. Custom cabinetry, marble bath, and rooftop pool access.",agentId:3},
+  {id:7,title:"Craftsman Bungalow",location:"Pasadena, CA",price:1250000,beds:4,baths:3,sqft:2400,type:"house",status:"sale",image:"https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd2?w=800&q=80",desc:"Historic craftsman with original built-ins, restored woodwork, and a wraparound porch on a tree-lined street.",agentId:1},
+  {id:8,title:"Skyline Tower Unit",location:"Chicago, IL",price:2800,beds:2,baths:2,sqft:1100,type:"apartment",status:"rent",image:"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",desc:"High-floor unit in a landmark tower. Lake views, stainless kitchen, and access to fitness center and spa.",agentId:2},
+  {id:9,title:"Garden Townhouse",location:"San Francisco, CA",price:2100000,beds:3,baths:2,sqft:1800,type:"house",status:"sale",image:"https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",desc:"Victorian townhouse with a secret garden, updated systems, and parking. Steps from the park and cafes.",agentId:3},
+  {id:10,title:"Minimalist Studio",location:"Austin, TX",price:1800,beds:1,baths:1,sqft:600,type:"apartment",status:"rent",image:"https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80",desc:"Architect-designed studio with built-in storage, concrete floors, and a private balcony overlooking the creek.",agentId:1},
+  {id:11,title:"Waterfront Mansion",location:"Hamptons, NY",price:12000000,beds:8,baths:9,sqft:12000,type:"villa",status:"sale",image:"https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80",desc:"Oceanfront compound with private beach, guest house, pool house, and a dock. The ultimate summer retreat.",agentId:2},
+  {id:12,title:"Historic Brownstone",location:"Boston, MA",price:3500000,beds:4,baths:3,sqft:3200,type:"house",status:"sale",image:"https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80",desc:"Immaculately restored brownstone on Beacon Hill. Period details, modern kitchen, and a private courtyard.",agentId:3}
+];
+
+var agents = [
+  {id:1,name:"Sarah Mitchell",role:"Senior Agent",email:"sarah@sterlingandco.com",phone:"+1 (555) 101-2345",image:"https://randomuser.me/api/portraits/women/44.jpg",listings:5},
+  {id:2,name:"James Okonkwo",role:"Luxury Specialist",email:"james@sterlingandco.com",phone:"+1 (555) 202-3456",image:"https://randomuser.me/api/portraits/men/32.jpg",listings:4},
+  {id:3,name:"Elena Vasquez",role:"New Development",email:"elena@sterlingandco.com",phone:"+1 (555) 303-4567",image:"https://randomuser.me/api/portraits/women/68.jpg",listings:3}
+];
+
+var listings = [];
+var favorites = [];
+var currentUser = null;
+var searchTab = 'buy';
+var WHATSAPP_NUMBER = '+92 330 2741348'; 
+
+try {
+  listings = JSON.parse(localStorage.getItem('abr_listings')) || defaultListings;
+} catch(e) { listings = defaultListings; }
+try {
+  favorites = JSON.parse(localStorage.getItem('abr_favorites')) || [];
+} catch(e) { favorites = []; }
+try {
+  currentUser = JSON.parse(localStorage.getItem('abr_user')) || null;
+} catch(e) { currentUser = null; }
+
+function saveListings() {
+  try { localStorage.setItem('abr_listings', JSON.stringify(listings)); } catch(e) {}
+}
+function saveFavorites() {
+  try { localStorage.setItem('abr_favorites', JSON.stringify(favorites)); } catch(e) {}
+  updateFavBadge();
+}
+function saveUser() {
+  try { localStorage.setItem('abr_user', JSON.stringify(currentUser)); } catch(e) {}
+}
+
+function getVal(id) {
+  var el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+function formatPrice(n, status) {
+  if (status === 'rent') return '$' + n.toLocaleString() + '/mo';
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M';
+  return '$' + n.toLocaleString();
+}
+
+function renderListings() {
+  var grid = document.getElementById('listingsGrid');
+  if (!grid) return;
+
+  var keyword = (getVal('filterKeyword') || '').toLowerCase();
+  var sort = getVal('filterSort') || 'newest';
+  var location = (getVal('searchLocation') || '').toLowerCase();
+  var type = getVal('searchType') || '';
+  var priceRange = getVal('searchPrice') || '';
+  var beds = getVal('searchBeds') || '';
+
+  var filtered = [];
+  for (var i = 0; i < listings.length; i++) {
+    var l = listings[i];
+    if (searchTab === 'buy' && l.status !== 'sale') continue;
+    if (searchTab === 'rent' && l.status !== 'rent') continue;
+    if (keyword && l.title.toLowerCase().indexOf(keyword) === -1 && l.location.toLowerCase().indexOf(keyword) === -1) continue;
+    if (location && l.location.toLowerCase().indexOf(location) === -1) continue;
+    if (type && l.type !== type) continue;
+    if (beds && l.beds < parseInt(beds)) continue;
+    if (priceRange) {
+      if (priceRange === '0-500000' && l.price >= 500000) continue;
+      if (priceRange === '500000-1000000' && (l.price < 500000 || l.price >= 1000000)) continue;
+      if (priceRange === '1000000-2000000' && (l.price < 1000000 || l.price >= 2000000)) continue;
+      if (priceRange === '2000000+' && l.price < 2000000) continue;
+    }
+    filtered.push(l);
+  }
+
+  if (sort === 'price-asc') {
+    filtered.sort(function(a, b) { return a.price - b.price; });
+  } else if (sort === 'price-desc') {
+    filtered.sort(function(a, b) { return b.price - a.price; });
+  } else {
+    filtered.sort(function(a, b) { return b.id - a.id; });
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:#666"><p>No properties match your criteria.</p></div>';
+    return;
+  }
+
+  var html = '';
+  for (var j = 0; j < filtered.length; j++) {
+    var l = filtered[j];
+    var isFav = favorites.indexOf(l.id) > -1;
+    var tagClass = l.status === 'rent' ? 'rent' : '';
+    var tagText = l.status === 'sale' ? 'For Sale' : 'For Rent';
+    var favClass = isFav ? 'active' : '';
+    html += '<div class="card" onclick="openProperty(' + l.id + ')">' +
+      '<div class="card-img">' +
+        '<img src="' + l.image + '" alt="' + l.title + '" loading="lazy">' +
+        '<span class="card-tag ' + tagClass + '">' + tagText + '</span>' +
+        '<button class="card-fav ' + favClass + '" onclick="event.stopPropagation();toggleFavorite(' + l.id + ')" aria-label="Favorite">' +
+          '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-price">' + formatPrice(l.price, l.status) + '</div>' +
+        '<div class="card-title">' + l.title + '</div>' +
+        '<div class="card-meta">' +
+          '<span><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>' + l.beds + ' bd</span>' +
+          '<span><svg viewBox="0 0 24 24"><path d="M3 21h18v-8H3v8zm0-10h18V3H3v8z"/></svg>' + l.baths + ' ba</span>' +
+          '<span><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>' + l.sqft.toLocaleString() + ' sqft</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  grid.innerHTML = html;
+}
+
+function renderAgents() {
+  var grid = document.getElementById('agentsGrid');
+  if (!grid) return;
+  var html = '';
+  for (var i = 0; i < agents.length; i++) {
+    var a = agents[i];
+    html += '<div class="agent-item">' +
+      '<img src="' + a.image + '" alt="' + a.name + '">' +
+      '<h3>' + a.name + '</h3>' +
+      '<p class="role">' + a.role + '</p>' +
+      '<p class="contact">' + a.email + '<br>' + a.phone + '</p>' +
+    '</div>';
+  }
+  grid.innerHTML = html;
+}
+
+function openProperty(id) {
+  var l = null;
+  for (var i = 0; i < listings.length; i++) {
+    if (listings[i].id === id) { l = listings[i]; break; }
+  }
+  if (!l) return;
+
+  var agent = agents[0];
+  for (var j = 0; j < agents.length; j++) {
+    if (agents[j].id === l.agentId) { agent = agents[j]; break; }
+  }
+
+  var modal = document.getElementById('propertyModal');
+  var img = document.getElementById('modalImg');
+  var body = document.getElementById('modalBody');
+  img.src = l.image;
+
+  var typeLabel = l.type.charAt(0).toUpperCase() + l.type.slice(1);
+  body.innerHTML =
+    '<div class="modal-price">' + formatPrice(l.price, l.status) + '</div>' +
+    '<h3 class="modal-title">' + l.title + '</h3>' +
+    '<div class="modal-specs">' +
+      '<div class="modal-spec"><div class="modal-spec-value">' + l.beds + '</div><div class="modal-spec-label">Bedrooms</div></div>' +
+      '<div class="modal-spec"><div class="modal-spec-value">' + l.baths + '</div><div class="modal-spec-label">Bathrooms</div></div>' +
+      '<div class="modal-spec"><div class="modal-spec-value">' + l.sqft.toLocaleString() + '</div><div class="modal-spec-label">Sq Ft</div></div>' +
+      '<div class="modal-spec"><div class="modal-spec-value">' + typeLabel + '</div><div class="modal-spec-label">Type</div></div>' +
+    '</div>' +
+    '<p class="modal-desc">' + l.desc + '</p>' +
+    '<div class="mortgage-calc">' +
+      '<h4>Mortgage Estimate</h4>' +
+      '<div class="mortgage-row">' +
+        '<div class="mortgage-field"><label>Home Price</label><input type="number" id="mPrice" value="' + l.price + '" oninput="calcMortgage()"></div>' +
+        '<div class="mortgage-field"><label>Down Payment %</label><input type="number" id="mDown" value="20" oninput="calcMortgage()"></div>' +
+        '<div class="mortgage-field"><label>Interest Rate %</label><input type="number" id="mRate" value="6.5" step="0.1" oninput="calcMortgage()"></div>' +
+        '<div class="mortgage-field"><label>Loan Term (years)</label><input type="number" id="mTerm" value="30" oninput="calcMortgage()"></div>' +
+      '</div>' +
+      '<div class="mortgage-result" id="mResult">Monthly: $0</div>' +
+    '</div>' +
+    '<div class="agent-card">' +
+      '<img src="' + agent.image + '" alt="' + agent.name + '">' +
+      '<div class="agent-card-info">' +
+        '<h4>' + agent.name + '</h4>' +
+        '<p>' + agent.role + ' &middot; ' + agent.phone + '</p>' +
+      '</div>' +
+    '</div>' +
+    '<button class="btn-primary" style="width:100%;justify-content:center" onclick="requestTour(' + l.id + ')">Request a Tour</button>';
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  calcMortgage();
+}
+
+function calcMortgage() {
+  var priceEl = document.getElementById('mPrice');
+  var downEl = document.getElementById('mDown');
+  var rateEl = document.getElementById('mRate');
+  var termEl = document.getElementById('mTerm');
+  var resultEl = document.getElementById('mResult');
+  if (!priceEl || !downEl || !rateEl || !termEl || !resultEl) return;
+
+  var price = parseFloat(priceEl.value) || 0;
+  var down = parseFloat(downEl.value) || 0;
+  var rate = parseFloat(rateEl.value) || 0;
+  var term = parseFloat(termEl.value) || 0;
+  var loan = price * (1 - down / 100);
+  var r = rate / 100 / 12;
+  var n = term * 12;
+  var payment = 0;
+  if (r > 0 && n > 0) {
+    payment = loan * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  } else if (n > 0) {
+    payment = loan / n;
+  }
+  resultEl.textContent = 'Monthly: $' + Math.round(payment).toLocaleString();
+}
+
+function closeModal(e) {
+  if (e.target === e.currentTarget) closeModalDirect();
+}
+function closeModalDirect() {
+  var modal = document.getElementById('propertyModal');
+  if (modal) modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function toggleFavorite(id) {
+  var idx = favorites.indexOf(id);
+  if (idx > -1) {
+    favorites.splice(idx, 1);
+  } else {
+    favorites.push(id);
+  }
+  saveFavorites();
+  renderListings();
+  renderFavPanel();
+  showToast(idx > -1 ? 'Removed from saved' : 'Added to saved');
+}
+
+function updateFavBadge() {
+  var badge = document.getElementById('favBadge');
+  if (badge) badge.textContent = favorites.length;
+}
+
+function toggleFavPanel() {
+  var panel = document.getElementById('favPanel');
+  if (panel) panel.classList.toggle('active');
+  renderFavPanel();
+}
+
+function renderFavPanel() {
+  var body = document.getElementById('favPanelBody');
+  if (!body) return;
+  if (favorites.length === 0) {
+    body.innerHTML = '<div class="fav-empty"><p>No saved properties yet.</p><p style="font-size:0.8rem;margin-top:8px">Heart a listing to save it here.</p></div>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < favorites.length; i++) {
+    var id = favorites[i];
+    var l = null;
+    for (var j = 0; j < listings.length; j++) {
+      if (listings[j].id === id) { l = listings[j]; break; }
+    }
+    if (!l) continue;
+    html += '<div class="fav-item" onclick="openProperty(' + l.id + ');toggleFavPanel()">' +
+      '<img src="' + l.image + '" alt="' + l.title + '">' +
+      '<div class="fav-item-info">' +
+        '<h4>' + l.title + '</h4>' +
+        '<p>' + formatPrice(l.price, l.status) + ' &middot; ' + l.location + '</p>' +
+      '</div>' +
+    '</div>';
+  }
+  body.innerHTML = html;
+}
+
+function openLogin() {
+  var modal = document.getElementById('loginModal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeLogin(e) {
+  if (e.target === e.currentTarget) closeLoginDirect();
+}
+function closeLoginDirect() {
+  var modal = document.getElementById('loginModal');
+  if (modal) modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  var email = document.getElementById('loginEmail').value;
+  var password = document.getElementById('loginPassword').value;
+  var agent = null;
+  for (var i = 0; i < agents.length; i++) {
+    if (agents[i].email.toLowerCase() === email.toLowerCase()) {
+      agent = agents[i];
+      break;
+    }
+  }
+  if ((agent && password === 'demo123') || password === 'demo123') {
+    currentUser = {email: email, name: agent ? agent.name : 'Agent', id: agent ? agent.id : 0};
+    saveUser();
+    closeLoginDirect();
+    showDashboard();
+    showToast('Welcome back, ' + currentUser.name);
+  } else {
+    showToast('Invalid credentials. Try demo123');
+  }
+}
+
+function showDashboard() {
+  var sections = document.querySelectorAll('.section:not(#dashboard)');
+  for (var i = 0; i < sections.length; i++) {
+    sections[i].style.display = 'none';
+  }
+  var dash = document.getElementById('dashboard');
+  if (dash) dash.classList.add('active');
+  var title = document.getElementById('dashTitle');
+  if (title) title.textContent = currentUser.name + '\'s Dashboard';
+  renderDashboard();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function logout() {
+  currentUser = null;
+  saveUser();
+  var dash = document.getElementById('dashboard');
+  if (dash) dash.classList.remove('active');
+  var sections = document.querySelectorAll('.section:not(#dashboard)');
+  for (var i = 0; i < sections.length; i++) {
+    sections[i].style.display = '';
+  }
+  showToast('Logged out successfully');
+}
+
+function renderDashboard() {
+  var stats = document.getElementById('dashStats');
+  var tbody = document.getElementById('dashTableBody');
+  if (!stats || !tbody) return;
+
+  var myListings = [];
+  if (currentUser && currentUser.id) {
+    for (var i = 0; i < listings.length; i++) {
+      if (listings[i].agentId === currentUser.id) myListings.push(listings[i]);
+    }
+  } else {
+    myListings = listings;
+  }
+
+  var totalValue = 0;
+  for (var j = 0; j < myListings.length; j++) {
+    totalValue += myListings[j].price;
+  }
+
+  stats.innerHTML =
+    '<div class="dash-stat"><div class="dash-stat-value">' + myListings.length + '</div><div class="dash-stat-label">My Listings</div></div>' +
+    '<div class="dash-stat"><div class="dash-stat-value">$' + (totalValue / 1000000).toFixed(1) + 'M</div><div class="dash-stat-label">Portfolio Value</div></div>' +
+    '<div class="dash-stat"><div class="dash-stat-value">' + favorites.length + '</div><div class="dash-stat-label">Total Favorites</div></div>' +
+    '<div class="dash-stat"><div class="dash-stat-value">' + Math.floor(Math.random() * 20 + 5) + '</div><div class="dash-stat-label">Inquiries</div></div>';
+
+  var html = '';
+  for (var k = 0; k < myListings.length; k++) {
+    var l = myListings[k];
+    html += '<tr>' +
+      '<td><img src="' + l.image + '" alt=""></td>' +
+      '<td>' + l.title + '</td>' +
+      '<td>' + formatPrice(l.price, l.status) + '</td>' +
+      '<td>' + l.type + '</td>' +
+      '<td><span class="status-pill ' + l.status + '">' + l.status + '</span></td>' +
+      '<td><div class="dash-actions"><button onclick="editListing(' + l.id + ')">Edit</button><button class="delete" onclick="deleteListing(' + l.id + ')">Delete</button></div></td>' +
+    '</tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+function toggleAddForm() {
+  var form = document.getElementById('addForm');
+  if (form) form.classList.toggle('active');
+}
+
+function addListing() {
+  var title = document.getElementById('newTitle').value;
+  var location = document.getElementById('newLocation').value;
+  var price = parseFloat(document.getElementById('newPrice').value) || 0;
+  var beds = parseInt(document.getElementById('newBeds').value) || 0;
+  var baths = parseInt(document.getElementById('newBaths').value) || 0;
+  var sqft = parseInt(document.getElementById('newSqft').value) || 0;
+  var type = document.getElementById('newType').value;
+  var status = document.getElementById('newStatus').value;
+  var desc = document.getElementById('newDesc').value;
+  var image = document.getElementById('newImage').value;
+  if (!image) image = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80';
+  if (!title || !location || !price) {
+    showToast('Please fill all required fields');
+    return;
+  }
+  var maxId = 0;
+  for (var i = 0; i < listings.length; i++) {
+    if (listings[i].id > maxId) maxId = listings[i].id;
+  }
+  var newId = maxId + 1;
+  listings.push({
+    id: newId, title: title, location: location, price: price,
+    beds: beds, baths: baths, sqft: sqft, type: type, status: status,
+    image: image, desc: desc, agentId: (currentUser && currentUser.id) ? currentUser.id : 1
+  });
+  saveListings();
+  renderDashboard();
+  renderListings();
+  var form = document.getElementById('addForm');
+  if (form) form.classList.remove('active');
+  var inputs = document.querySelectorAll('#addForm input, #addForm textarea');
+  for (var j = 0; j < inputs.length; j++) {
+    inputs[j].value = '';
+  }
+  showToast('Listing added successfully');
+}
+
+function deleteListing(id) {
+  if (!confirm('Delete this listing?')) return;
+  var newListings = [];
+  for (var i = 0; i < listings.length; i++) {
+    if (listings[i].id !== id) newListings.push(listings[i]);
+  }
+  listings = newListings;
+  var newFavs = [];
+  for (var j = 0; j < favorites.length; j++) {
+    if (favorites[j] !== id) newFavs.push(favorites[j]);
+  }
+  favorites = newFavs;
+  saveListings();
+  saveFavorites();
+  renderDashboard();
+  renderListings();
+  showToast('Listing deleted');
+}
+
+function editListing(id) {
+  var l = null;
+  for (var i = 0; i < listings.length; i++) {
+    if (listings[i].id === id) { l = listings[i]; break; }
+  }
+  if (!l) return;
+  document.getElementById('newTitle').value = l.title;
+  document.getElementById('newLocation').value = l.location;
+  document.getElementById('newPrice').value = l.price;
+  document.getElementById('newBeds').value = l.beds;
+  document.getElementById('newBaths').value = l.baths;
+  document.getElementById('newSqft').value = l.sqft;
+  document.getElementById('newType').value = l.type;
+  document.getElementById('newStatus').value = l.status;
+  document.getElementById('newDesc').value = l.desc;
+  document.getElementById('newImage').value = l.image;
+  var form = document.getElementById('addForm');
+  if (form) form.classList.add('active');
+  deleteListing(id);
+}
+
+function setSearchTab(tab, el) {
+  searchTab = tab;
+  var tabs = document.querySelectorAll('.search-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+  }
+  el.classList.add('active');
+  renderListings();
+}
+
+function applySearch() {
+  renderListings();
+  scrollToSection('listings');
+  showToast('Search applied');
+}
+
+function scrollToSection(id) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+function toggleMobileNav() {
+  var nav = document.getElementById('mobileNav');
+  var btn = document.getElementById('hamburger');
+  if (nav) nav.classList.toggle('active');
+  if (btn) btn.classList.toggle('active');
+}
+
+function handleContact(e) {
+  e.preventDefault();
+  showToast('Message sent! We will be in touch within 24 hours.');
+  e.target.reset();
+}
+
+function requestTour(id) {
+  var l = null;
+  for (var i = 0; i < listings.length; i++) {
+    if (listings[i].id === id) { l = listings[i]; break; }
+  }
+  if (!l) return;
+
+  var typeLabel = l.status === 'rent' ? 'rental' : 'property';
+  var msg = 'Hi! I am interested in requesting a tour for the ' + typeLabel + ' at ' + l.title + ' located in ' + l.location + '. Could you please share available times? Thank you!';
+  var waLink = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+
+  window.open(waLink, '_blank');
+  showToast('Opening WhatsApp...');
+  closeModalDirect();
+}
+function subscribeNewsletter() {
+  var email = document.getElementById('newsletterEmail').value;
+  if (!email || email.indexOf('@') === -1) {
+    showToast('Please enter a valid email');
+    return;
+  }
+  showToast('Subscribed! Welcome to the Abdulbari newsletter.');
+  document.getElementById('newsletterEmail').value = '';
+}
+
+function showToast(msg) {
+  var container = document.getElementById('toastContainer');
+  if (!container) return;
+  var toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(function() { toast.classList.add('show'); }, 10);
+  setTimeout(function() {
+    toast.classList.remove('show');
+    setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 400);
+  }, 3000);
+}
+
+function init() {
+  renderListings();
+  renderAgents();
+  updateFavBadge();
+  if (currentUser) showDashboard();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModalDirect();
+    closeLoginDirect();
+    var favPanel = document.getElementById('favPanel');
+    if (favPanel) favPanel.classList.remove('active');
+    var mobileNav = document.getElementById('mobileNav');
+    if (mobileNav) mobileNav.classList.remove('active');
+    var hamburger = document.getElementById('hamburger');
+    if (hamburger) hamburger.classList.remove('active');
+  }
+});
+</script>
+</body>
+</html>
